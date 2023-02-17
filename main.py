@@ -17,7 +17,7 @@ WORK_SEC = 5
 SHORT_BREAK_SEC = 10
 LONG_BREAK_SEC = 60
 reps = 1
-
+timer = None
 # ---------------------------- TIMER RESET ------------------------------- #
 
 def reset_time():
@@ -25,7 +25,8 @@ def reset_time():
     timer_label.config(text="TIMER", fg=RED)
     new_min_sec = time.strftime("%M:%S", time.gmtime(time_to_reset))
     canvas.itemconfig(timer_testing, text=new_min_sec)
-    return time_to_reset
+    window.after_cancel(timer)
+
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 
@@ -63,7 +64,8 @@ def count_down(time_remaining):
             mark+="√"
         sessions.config(text=mark)
     else:
-        window.after(1000, count_down, time_remaining - 1)
+        global timer
+        timer = window.after(1000, count_down, time_remaining - 1)
 
 
 
