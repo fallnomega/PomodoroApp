@@ -23,11 +23,12 @@ def timer():
 def count_down(time_remaining):
     if time_remaining==0:
         return
-    time_remaining-=1
     min_sec = time.strftime("%M:%S",time.gmtime(time_remaining))
     canvas.itemconfig(timer_testing,text=min_sec)
-    window.after(1000, count_down, time_remaining)
+    window.after(1000, count_down, time_remaining -1 )
 
+def reset_time():
+    return 1500
 
 # ---------------------------- UI SETUP ------------------------------- #
 #window setup/canvas setup
@@ -49,7 +50,7 @@ timer_label.place(x=50, y=-55)
 #start and reset buttons
 start = tk.Button(text="Start", bg=GREEN, borderwidth=0, highlightthickness=0,command=lambda: count_down(time_left))
 start.place(x=-50, y=200)
-reset = tk.Button(text="Reset", bg=GREEN, borderwidth=0, highlightthickness=0)
+reset = tk.Button(text="Reset", bg=GREEN, borderwidth=0, highlightthickness=0,command=lambda: reset_time(time_left))
 reset.place(x=175, y=200)
 #session checkmarks to see how many times you have run the timer
 sessions = tk.Label(text="√",fg=RED,bg=GREEN)
