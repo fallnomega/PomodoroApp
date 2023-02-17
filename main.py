@@ -7,18 +7,34 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 25
-SHORT_BREAK_MIN = 5
-LONG_BREAK_MIN = 20
-default_check_x=90
-default_check_y=240
+# WORK_SEC = 1500
+# SHORT_BREAK_SEC = 300
+# LONG_BREAK_SEC = 1200
+WORK_SEC = 5
+SHORT_BREAK_SEC = 10
+LONG_BREAK_SEC = 60
+reps = 1
 
 
 # ---------------------------- TIMER RESET ------------------------------- #
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
-def timer():
-    return
+
+def start_timer():
+    global reps
+    odds = (1, 3, 5, 7)
+    evens = (2, 4, 6)
+    if reps in odds:
+        count_down(WORK_SEC)
+        reps += 1
+    elif reps in evens:
+        count_down(SHORT_BREAK_SEC)
+        reps += 1
+    elif reps == 8:
+        count_down(LONG_BREAK_SEC)
+        reps += 1
+    else:
+        return
 
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
@@ -27,6 +43,7 @@ def count_down(time_remaining):
     canvas.itemconfig(timer_testing, text=min_sec)
 
     if time_remaining == 0:
+        start_timer()
         sessions = tk.Label(text="√", fg=YELLOW, bg=GREEN)
         sessions.place(x=90, y=240)
         return
@@ -44,8 +61,6 @@ window = tk.Tk()
 window.title("Pomodoro")
 window.minsize(width=300, height=350)
 window.config(padx=100, pady=50, bg=GREEN)
-time_left = 2
-
 # background setup
 bgimg = tk.PhotoImage(file="tomato.png")
 canvas = tk.Canvas(width=200, height=224, bg=GREEN, highlightthickness=False)
@@ -56,7 +71,7 @@ canvas.pack()
 timer_label = tk.Label(text="Timer", font=(FONT_NAME, 40, "bold"), fg=RED, bg=GREEN)
 timer_label.place(x=50, y=-55)
 # start and reset buttons
-start = tk.Button(text="Start", bg=GREEN, borderwidth=0, highlightthickness=0, command=lambda: count_down(time_left))
+start = tk.Button(text="Start", bg=GREEN, borderwidth=0, highlightthickness=0, command=start_timer)
 start.place(x=-50, y=200)
 reset = tk.Button(text="Reset", bg=GREEN, borderwidth=0, highlightthickness=0)
 reset.place(x=175, y=200)
