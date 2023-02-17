@@ -1,3 +1,4 @@
+import math
 import tkinter as tk
 import time
 
@@ -17,8 +18,14 @@ SHORT_BREAK_SEC = 10
 LONG_BREAK_SEC = 60
 reps = 1
 
-
 # ---------------------------- TIMER RESET ------------------------------- #
+
+def reset_time():
+    time_to_reset = 1500
+    timer_label.config(text="TIMER", fg=RED)
+    new_min_sec = time.strftime("%M:%S", time.gmtime(time_to_reset))
+    canvas.itemconfig(timer_testing, text=new_min_sec)
+    return time_to_reset
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 
@@ -31,6 +38,7 @@ def start_timer():
         count_down(WORK_SEC)
         reps += 1
     elif reps in evens:
+        sessions.place(x=90, y=240)
         timer_label.config(text="BREAK", fg=PINK)
         count_down(SHORT_BREAK_SEC)
         reps += 1
@@ -49,15 +57,14 @@ def count_down(time_remaining):
 
     if time_remaining == 0:
         start_timer()
-        sessions = tk.Label(text="√", fg=YELLOW, bg=GREEN)
-        sessions.place(x=90, y=240)
-        return
-    window.after(1000, count_down, time_remaining - 1)
+        mark=""
+        work_sessions = math.floor(reps/2)
+        for x in range(work_sessions):
+            mark+="√"
+        sessions.config(text=mark)
+    else:
+        window.after(1000, count_down, time_remaining - 1)
 
-
-def reset_time(time_to_reset):
-    time_to_reset = 5
-    return time_to_reset
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -78,9 +85,10 @@ timer_label.place(x=50, y=-55)
 # start and reset buttons
 start = tk.Button(text="Start", bg=GREEN, borderwidth=0, highlightthickness=0, command=start_timer)
 start.place(x=-50, y=200)
-reset = tk.Button(text="Reset", bg=GREEN, borderwidth=0, highlightthickness=0)
+reset = tk.Button(text="Reset", bg=GREEN, borderwidth=0, highlightthickness=0, command=reset_time)
 reset.place(x=175, y=200)
 # session checkmarks to see how many times you have run the timer
-
+sessions = tk.Label(text="√",fg="black",bg=GREEN)
+# sessions.place(x=90, y=240)
 
 window.mainloop()
