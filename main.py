@@ -43,7 +43,7 @@ start.place(x=-50, y=200)
 reset = tk.Button(text="Reset", bg=GREEN, borderwidth=0, highlightthickness=False)
 reset.place(x=175, y=200)
 
-checkmark = tk.Label(text="√",fg=RED,bg=GREEN)
-checkmark.place(x=90, y=240)
+sessions = tk.Label(text="√",fg=RED,bg=GREEN)
+sessions.place(x=90, y=240)
 
 window.mainloop()
