@@ -10,6 +10,8 @@ FONT_NAME = "Courier"
 # WORK_SEC = 1500
 # SHORT_BREAK_SEC = 300
 # LONG_BREAK_SEC = 1200
+
+# TESTING TIMERS BELOW
 WORK_SEC = 5
 SHORT_BREAK_SEC = 10
 LONG_BREAK_SEC = 60
@@ -25,12 +27,15 @@ def start_timer():
     odds = (1, 3, 5, 7)
     evens = (2, 4, 6)
     if reps in odds:
+        timer_label.config(text="WORK", fg="green")
         count_down(WORK_SEC)
         reps += 1
     elif reps in evens:
+        timer_label.config(text="BREAK", fg=PINK)
         count_down(SHORT_BREAK_SEC)
         reps += 1
     elif reps == 8:
+        timer_label.config(text="BREAK", fg=RED)
         count_down(LONG_BREAK_SEC)
         reps += 1
     else:
